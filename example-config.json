@@ -1,0 +1,16 @@
+{
+    "apptype":"shiny",
+    "id":"abcd-1234",
+    "displayname":"Permits Explorer",
+    "domain":"peters.test-socrata.com",
+    "appsrc":
+    {
+        "giturl":"git@bitbucket.org:socrata/shiny-demos.git",
+        "srcsubdir":"permits-explorer"
+    },
+    "customparams":
+    {
+        "src_data_permits":"https://data.seattle.gov/api/views/mags-97de/rows.csv?accessType=DOWNLOAD",
+        "bogus":"val"
+    }
+} 
