@@ -40,6 +40,7 @@ def write_shiny_dockerfile(app_src_path):
     RUN apt update \\
         && apt install -y -t unstable \\
         libssl-dev \\
+        libxml2-dev \\
         && Rscript packrat/init.R --bootstrap-packrat
     '''
 
@@ -49,11 +50,12 @@ def write_shiny_dockerfile(app_src_path):
 def write_dockerfile(dockertype, app_src_dir):
     if dockertype == "shiny":
         write_shiny_dockerfile(app_src_dir)
-    else raise Exception("Unknown docker application type")
+    else:
+        raise Exception("Unknown docker application type")
 
     
 def build_docker(app_src_dir, appid):
-    subprocess.run('docker build -t {0}'.format(app_id),
+    subprocess.run('docker build -t {0} .'.format(app_id),
                    shell = True,
                    check = True,
                    cwd = app_src_dir)
