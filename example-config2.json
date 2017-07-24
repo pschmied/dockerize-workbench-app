@@ -7,7 +7,7 @@
     {
         "giturl":"git@bitbucket.org:socrata/shiny-demos.git",
         "gitbranch":"master",
-        "srcsubdir":"permits-explorer"
+        "srcsubdir":"collisions"
     },
     "customparams":
     {

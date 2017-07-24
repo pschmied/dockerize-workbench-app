@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import json, dpath, re, tempfile, subprocess
+import json, dpath, re, tempfile, subprocess, sys, os
 
 
 def get_relpath_from_git(git_url):
@@ -54,7 +54,7 @@ def write_dockerfile(dockertype, app_src_dir):
         raise Exception("Unknown docker application type")
 
     
-def build_docker(app_src_dir, appid):
+def build_docker(app_src_dir, app_id):
     subprocess.run('docker build -t {0} .'.format(app_id),
                    shell = True,
                    check = True,
@@ -66,8 +66,7 @@ def main():
     # Grab the app config. Imagining that the app-workbench would generate
     # this, but reading from file for illustration purposes now.
     with open(
-            '/home/peter/github/dockerize-workbench-app/example-config.json'
-            # sys.argv[1]
+            sys.argv[1]
     ) as config_file:
         app_config = json.load(config_file)
 
@@ -103,3 +102,6 @@ def main():
     )
 
     build_docker(app_src_dir, app_id)
+
+if __name__ == "__main__":
+    main()
