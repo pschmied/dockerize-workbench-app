@@ -29,7 +29,7 @@ def write_params(custom_params, appsrc_dir, filename = 'app_config.json'):
         json.dump(custom_params, outfile)
 
 
-def write_shiny_dockerfile(app_src_path):
+def write_shiny_dockerfile(app_src_dir):
     shiny_docker_template = '''
     FROM rocker/shiny
     
@@ -44,12 +44,29 @@ def write_shiny_dockerfile(app_src_path):
         && Rscript packrat/init.R --bootstrap-packrat
     '''
 
-    with open(os.path.join(app_src_path, "Dockerfile"), "w") as dockerfile:
+    with open(os.path.join(app_src_dir, "Dockerfile"), "w") as dockerfile:
         dockerfile.write(shiny_docker_template)
+
+def write_dash_dockerfile(app_src_dir):
+    dash_docker_template = '''
+    FROM continuumio/miniconda3
+
+    WORKDIR /app
+
+    ADD . /app
+
+    RUN pip install -r requirements.txt
+
+    EXPOSE 3838'''
+
+    with open(os.path.join(app_src_dir, "Dockerfile"), "w") as dockerfile:
+        dockerfile.write(dash_docker_template)
 
 def write_dockerfile(dockertype, app_src_dir):
     if dockertype == "shiny":
         write_shiny_dockerfile(app_src_dir)
+    elif dockertype == "dash":
+        write_dash_dockerfile(app_src_dir
     else:
         raise Exception("Unknown docker application type")
 
